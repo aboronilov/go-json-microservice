@@ -5,14 +5,11 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+
+	"github.com/aboronilov/go-grpc-pricefetcher/types"
 )
 
 type APIfunc func(ctx context.Context, w http.ResponseWriter, r *http.Request) error
-
-type PriceResponse struct {
-	Ticker string  `json:"ticker"`
-	Price  float64 `json:"price"`
-}
 
 type JSONAPIServer struct {
 	listenAddress string
@@ -52,7 +49,7 @@ func (s *JSONAPIServer) handleFetchPrice(ctx context.Context, w http.ResponseWri
 		return err
 	}
 
-	priceResponse := PriceResponse{
+	priceResponse := types.PriceResponse{
 		Price:  price,
 		Ticker: ticker,
 	}
